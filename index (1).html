@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valter Popcorn Shop — Campo Grande, Rio de Janeiro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a2744;
+    --navy-deep: #0f1a30;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --cream: #f9f4e8;
+    --cream-dark: #ede5d0;
+    --brown: #6b4226;
+    --brown-light: #8b5e3c;
+    --brown-pale: #c4956a;
+    --kraft: #c8a97e;
+    --white: #fdfaf4;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Jost', sans-serif; background: var(--cream); color: #1a1410; overflow-x: hidden; }
+
+  /* NAV — transparente sobre o hero */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 0 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 72px;
+    background: linear-gradient(to bottom, rgba(10,18,38,0.85) 0%, transparent 100%);
+    transition: background 0.4s;
+  }
+  nav.scrolled { background: var(--navy-deep); border-bottom: 1px solid rgba(201,168,76,0.25); }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase; line-height: 1.1; }
+  .nav-logo span { display: block; font-size: 0.5rem; letter-spacing: 0.4em; color: rgba(232,201,122,0.7); font-family: 'Jost', sans-serif; font-weight: 300; margin-top: 2px; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { color: rgba(249,244,232,0.8); text-decoration: none; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; transition: color 0.25s; }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ── HERO SPLIT ── */
+  .hero {
+    height: 100vh; min-height: 600px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Lado esquerdo: foto tela cheia */
+  .hero-photo {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.04);
+    animation: slowZoom 12s ease-out forwards;
+  }
+  @keyframes slowZoom {
+    from { transform: scale(1.08); }
+    to   { transform: scale(1.0); }
+  }
+  .hero-photo::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, rgba(10,18,38,0.15) 0%, rgba(10,18,38,0.55) 100%);
+  }
+
+  /* Lado direito: texto */
+  .hero-text {
+    background: var(--navy-deep);
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start;
+    padding: 6rem 4rem 6rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-text::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 100% 70% at 80% 80%, rgba(201,168,76,0.06) 0%, transparent 70%),
+      repeating-linear-gradient(45deg, transparent, transparent 60px, rgba(255,255,255,0.006) 60px, rgba(255,255,255,0.006) 61px);
+  }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    color: var(--gold); font-size: 0.6rem;
+    letter-spacing: 0.4em; text-transform: uppercase; font-weight: 600;
+    margin-bottom: 1.6rem; position: relative; z-index: 1;
+    opacity: 0; animation: fadeUp 0.8s 0.2s ease forwards;
+  }
+  .hero-eyebrow::before {
+    content: ''; width: 32px; height: 1px; background: var(--gold); opacity: 0.6;
+  }
+
+  .hero-text h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.8rem, 6vw, 6.5rem);
+    font-weight: 900;
+    color: var(--cream);
+    line-height: 0.88;
+    letter-spacing: -0.02em;
+    position: relative; z-index: 1;
+    opacity: 0; animation: fadeUp 0.9s 0.35s ease forwards;
+  }
+  .hero-text h1 em { font-style: italic; color: var(--gold); display: block; }
+
+  .hero-divider {
+    width: 48px; height: 2px; background: var(--gold);
+    margin: 2rem 0; opacity: 0.6;
+    position: relative; z-index: 1;
+    opacity: 0; animation: fadeUp 0.8s 0.5s ease forwards;
+  }
+
+  .hero-text p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; line-height: 1.7;
+    color: rgba(249,244,232,0.65);
+    font-style: italic;
+    max-width: 340px;
+    position: relative; z-index: 1;
+    opacity: 0; animation: fadeUp 0.8s 0.6s ease forwards;
+  }
+
+  .hero-cta {
+    display: flex; gap: 1rem; margin-top: 2.5rem;
+    position: relative; z-index: 1;
+    opacity: 0; animation: fadeUp 0.8s 0.75s ease forwards;
+  }
+  .btn-primary { background: var(--gold); color: var(--navy-deep); font-family: 'Jost', sans-serif; font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; padding: 14px 32px; text-decoration: none; transition: background 0.25s; }
+  .btn-primary:hover { background: var(--gold-light); }
+  .btn-outline { background: transparent; color: var(--cream); font-family: 'Jost', sans-serif; font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; padding: 13px 32px; text-decoration: none; border: 1px solid rgba(249,244,232,0.3); transition: border-color 0.25s, color 0.25s; }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* Faixa de sabores abaixo do hero */
+  .flavors-bar {
+    background: var(--navy);
+    border-top: 1px solid rgba(201,168,76,0.2);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .flavors-bar::-webkit-scrollbar { display: none; }
+  .flavors-bar-inner {
+    display: flex;
+    min-width: max-content;
+    padding: 0;
+  }
+  .fbar-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 1rem 2.2rem;
+    border-right: 1px solid rgba(201,168,76,0.12);
+    cursor: pointer;
+    transition: background 0.25s;
+    text-decoration: none;
+  }
+  .fbar-item:last-child { border-right: none; }
+  .fbar-item:hover { background: rgba(201,168,76,0.07); }
+  .fbar-thumb {
+    width: 48px; height: 48px; border-radius: 50%;
+    overflow: hidden; flex-shrink: 0;
+    border: 1.5px solid rgba(201,168,76,0.35);
+  }
+  .fbar-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .fbar-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.65rem; letter-spacing: 0.18em;
+    text-transform: uppercase; font-weight: 500;
+    color: rgba(249,244,232,0.7);
+    white-space: nowrap;
+  }
+  .fbar-type {
+    font-size: 0.5rem; letter-spacing: 0.25em;
+    color: var(--gold); text-transform: uppercase;
+    display: block; margin-top: 2px; font-weight: 600;
+  }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* SECTIONS */
+  section { padding: 6rem 2rem; }
+  .section-tag { font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); font-weight: 600; display: block; margin-bottom: 0.8rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.1; color: var(--navy); }
+  .section-title em { font-style: italic; color: var(--brown); }
+
+  /* FLAVORS */
+  #sabores { background: var(--white); }
+  .flavors-header { text-align: center; margin-bottom: 3.5rem; }
+  .flavors-header .section-title { color: var(--navy); margin-top: 0.5rem; }
+  .flavor-tabs { display: flex; justify-content: center; margin-bottom: 3rem; border: 1px solid var(--navy); width: fit-content; margin-left: auto; margin-right: auto; }
+  .tab-btn { background: transparent; border: none; padding: 12px 40px; font-family: 'Jost', sans-serif; font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; cursor: pointer; color: var(--navy); transition: background 0.25s, color 0.25s; border-right: 1px solid var(--navy); }
+  .tab-btn:last-child { border-right: none; }
+  .tab-btn.active { background: var(--navy); color: var(--gold); }
+  .flavor-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2px; max-width: 1100px; margin: 0 auto; background: var(--cream-dark); }
+  .flavor-card { background: var(--cream); overflow: hidden; transition: background 0.35s; }
+  .flavor-card:hover { background: var(--navy); }
+  .flavor-card:hover .flavor-name { color: var(--cream); }
+  .flavor-card:hover .flavor-desc { color: rgba(249,244,232,0.72); }
+  .flavor-card:hover .flavor-tag { border-color: rgba(201,168,76,0.5); color: var(--gold); }
+  .flavor-img-wrap { width: 100%; aspect-ratio: 4/3; overflow: hidden; background: #0f1a30; }
+  .flavor-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.55s ease; }
+  .flavor-card:hover .flavor-img-wrap img { transform: scale(1.08); }
+  .flavor-inner { padding: 1.5rem 1.5rem 1.8rem; text-align: center; }
+  .flavor-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; transition: color 0.3s; }
+  .flavor-desc { font-family: 'Cormorant Garamond', serif; font-size: 0.98rem; font-style: italic; color: var(--brown-light); line-height: 1.6; transition: color 0.3s; }
+  .flavor-tag { display: inline-block; margin-top: 1rem; font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; color: var(--brown); border: 1px solid var(--brown-pale); padding: 4px 12px; transition: all 0.3s; }
+  .flavor-panel { display: none; }
+  .flavor-panel.active { display: block; }
+
+  /* KRAFT STRIP */
+  .kraft-strip { background: var(--kraft); padding: 4rem 2rem; text-align: center; position: relative; overflow: hidden; }
+  .kraft-strip::before { content: ''; position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='1' height='1' fill='%23000' opacity='0.05'/%3E%3C/svg%3E"); background-size: 4px 4px; }
+  .kraft-inner { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
+  .kraft-strip p { font-family: 'Playfair Display', serif; font-size: clamp(1.4rem, 3.5vw, 2.2rem); font-weight: 700; color: var(--navy-deep); line-height: 1.3; }
+  .kraft-strip p em { font-style: italic; color: var(--brown); }
+  .kraft-strip .sub { font-family: 'Jost', sans-serif; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(15,26,48,0.5); font-weight: 500; margin-top: 0.8rem; }
+
+  /* HISTÓRIA estilo Garrett */
+  #historia { background: var(--cream-dark); padding: 0; }
+  .story-block { display: grid; grid-template-columns: 1fr 1fr; min-height: 560px; }
+  .story-block.reverse { direction: rtl; }
+  .story-block.reverse > * { direction: ltr; }
+  .story-photo { position: relative; overflow: hidden; min-height: 560px; }
+  .story-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .story-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, transparent 55%, rgba(237,229,208,0.4)); }
+  .story-block.reverse .story-photo::after { background: linear-gradient(to left, transparent 55%, rgba(237,229,208,0.4)); }
+  .story-card-wrap { display: flex; align-items: center; justify-content: center; padding: 3rem 2.5rem; background: var(--cream-dark); }
+  .story-card { background: var(--navy); color: var(--cream); padding: 3rem 2.5rem; max-width: 440px; box-shadow: 10px 10px 0 var(--gold); }
+  .story-block.reverse .story-card { box-shadow: -10px 10px 0 var(--gold); }
+  .story-card .section-tag { color: var(--gold-light); }
+  .story-card h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 700; color: var(--cream); line-height: 1.2; margin: 0.5rem 0 1.2rem; }
+  .story-card h2 em { font-style: italic; color: var(--gold); }
+  .story-card p { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; line-height: 1.8; color: rgba(249,244,232,0.8); margin-bottom: 1rem; }
+  .story-card p strong { color: var(--gold-light); }
+  .story-card blockquote { margin-top: 1.5rem; border-left: 2px solid var(--gold); padding-left: 1.2rem; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.1rem; color: var(--gold-light); line-height: 1.6; }
+  .story-milestones { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--navy-deep); }
+  .milestone { padding: 2rem 1.5rem; border-right: 1px solid rgba(201,168,76,0.12); border-top: 3px solid transparent; transition: border-color 0.25s; }
+  .milestone:last-child { border-right: none; }
+  .milestone:hover { border-color: var(--gold); }
+  .milestone-year { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--gold); opacity: 0.6; }
+  .milestone-text { font-size: 0.78rem; color: rgba(249,244,232,0.55); margin-top: 0.3rem; line-height: 1.5; }
+
+  /* HERITAGE */
+  #patrimonio { background: var(--white); text-align: center; }
+  .heritage-inner { max-width: 700px; margin: 0 auto; }
+  .heritage-inner .section-title { margin-top: 0.8rem; margin-bottom: 1.5rem; }
+  .heritage-inner p { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; line-height: 1.8; color: var(--brown); font-style: italic; margin-bottom: 1rem; }
+  .heritage-badge { display: inline-flex; align-items: center; gap: 10px; margin-top: 2rem; background: var(--navy); color: var(--gold); padding: 14px 28px; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 600; text-decoration: none; }
+
+  /* CONTACT */
+  #contato { background: var(--navy-deep); color: var(--cream); text-align: center; padding: 7rem 2rem; }
+  #contato .section-tag { color: var(--gold); }
+  #contato .section-title { color: var(--cream); margin-top: 0.5rem; margin-bottom: 1.5rem; }
+  #contato .section-title em { color: var(--gold); }
+  .contact-info { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: rgba(249,244,232,0.6); margin-bottom: 2.5rem; }
+  .contact-info strong { color: var(--gold-light); font-style: normal; }
+  .contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .social-btn { display: inline-flex; align-items: center; gap: 8px; background: transparent; border: 1px solid rgba(201,168,76,0.35); color: var(--cream); padding: 12px 28px; font-family: 'Jost', sans-serif; font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500; text-decoration: none; transition: border-color 0.25s, color 0.25s; }
+  .social-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .social-btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+  /* FOOTER */
+  footer { background: #080e1f; padding: 2.5rem 2rem; text-align: center; border-top: 1px solid rgba(201,168,76,0.15); }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  footer p { font-size: 0.68rem; color: rgba(249,244,232,0.25); letter-spacing: 0.08em; }
+  .footer-line { width: 60px; height: 1px; background: rgba(201,168,76,0.3); margin: 1rem auto; }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; height: auto; }
+    .hero-photo { height: 55vw; min-height: 280px; }
+    .hero-text { padding: 3.5rem 2rem; }
+    .nav-links { display: none; }
+    .story-block, .story-block.reverse { grid-template-columns: 1fr; direction: ltr; }
+    .story-photo { min-height: 300px; }
+    .story-milestones { grid-template-columns: 1fr 1fr; }
+    .tab-btn { padding: 10px 18px; }
+  }
+
+  /* SABOR STORIES */
+  #origens { background: var(--navy-deep); padding: 6rem 2rem; position: relative; overflow: hidden; }
+  #origens::before { content: ''; position: absolute; inset: 0; background-image: url('campo-grande.jpg'); background-size: cover; background-position: center; opacity: 0.12; filter: sepia(40%); z-index: 0; }
+  #origens > * { position: relative; z-index: 1; }
+  .origens-header { text-align: center; margin-bottom: 5rem; }
+  .origens-header .section-tag { color: var(--gold-light); }
+  .origens-header .section-title { color: var(--cream); }
+  .origens-header .section-title em { color: var(--gold); }
+
+  .story-timeline { max-width: 960px; margin: 0 auto; position: relative; }
+  .story-timeline::before {
+    content: ''; position: absolute;
+    left: 50%; transform: translateX(-50%);
+    top: 0; bottom: 0; width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.4) 10%, rgba(201,168,76,0.4) 90%, transparent);
+  }
+
+  .story-entry {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    gap: 0;
+    margin-bottom: 4rem;
+    align-items: center;
+  }
+  .story-entry:last-child { margin-bottom: 0; }
+
+  .story-entry-text {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.15);
+    padding: 2rem 2rem;
+    position: relative;
+    transition: border-color 0.3s;
+  }
+  .story-entry-text:hover { border-color: rgba(201,168,76,0.4); }
+
+  /* Entradas pares: texto na direita */
+  .story-entry.right .story-entry-text { grid-column: 3; }
+  .story-entry.right .story-entry-dot { grid-column: 2; }
+  .story-entry.right .story-entry-empty { grid-column: 1; }
+
+  /* Entradas ímpares: texto na esquerda */
+  .story-entry.left .story-entry-text { grid-column: 1; }
+  .story-entry.left .story-entry-dot { grid-column: 2; }
+  .story-entry.left .story-entry-empty { grid-column: 3; }
+
+  .story-entry-dot {
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 8px;
+    z-index: 1;
+  }
+  .story-dot-circle {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--navy-deep);
+    border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .story-dot-year {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.75rem; font-weight: 700;
+    color: var(--gold); opacity: 0.7;
+    letter-spacing: 0.05em;
+  }
+
+  .story-entry-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 700;
+    color: var(--gold-light);
+    margin-bottom: 0.8rem;
+    line-height: 1.2;
+  }
+  .story-entry-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; line-height: 1.85;
+    color: rgba(249,244,232,0.75);
+    font-style: italic;
+  }
+  .story-entry-photo { width: 100%; height: 140px; object-fit: cover; margin-top: 1.2rem; opacity: 0.75; filter: sepia(30%); border: 1px solid rgba(201,168,76,0.2); }
+  .story-entry-body strong { color: var(--gold-light); font-style: normal; }
+
+  /* Final entry: full width */
+  .story-entry.full {
+    grid-template-columns: 1fr;
+    margin-top: 2rem;
+  }
+  .story-entry.full .story-entry-text {
+    grid-column: 1;
+    max-width: 680px; margin: 0 auto;
+    text-align: center;
+    border-color: rgba(201,168,76,0.3);
+    background: rgba(201,168,76,0.05);
+  }
+  .story-entry.full .story-entry-title { color: var(--gold); font-size: 1.3rem; }
+
+  @media (max-width: 768px) {
+    .story-timeline::before { left: 20px; }
+    .story-entry, .story-entry.right, .story-entry.left {
+      grid-template-columns: 40px 1fr;
+      grid-template-rows: auto;
+    }
+    .story-entry .story-entry-dot,
+    .story-entry.right .story-entry-dot,
+    .story-entry.left .story-entry-dot { grid-column: 1; grid-row: 1; }
+    .story-entry .story-entry-text,
+    .story-entry.right .story-entry-text,
+    .story-entry.left .story-entry-text { grid-column: 2; grid-row: 1; }
+    .story-entry .story-entry-empty,
+    .story-entry.right .story-entry-empty,
+    .story-entry.left .story-entry-empty { display: none; }
+    .story-dot-circle { width: 36px; height: 36px; font-size: 1rem; }
+    .story-timeline::before { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">
+    Valter Popcorn
+    <span>Shop · Campo Grande · Rio de Janeiro</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#sabores">Sabores</a></li>
+    <li><a href="#origens">Origens</a></li>
+    <li><a href="#historia">Nossa História</a></li>
+    <li><a href="#patrimonio">Legado</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+</nav>
+
+<!-- HERO SPLIT -->
+<div class="hero">
+  <!-- Esquerda: foto -->
+  <div class="hero-photo">
+    <img src="pipoca-caramelo.jpg" alt="Pipoca de caramelo Valter Popcorn">
+  </div>
+
+  <!-- Direita: texto -->
+  <div class="hero-text">
+    <div class="hero-eyebrow">Desde 1992 · Campo Grande · Rio de Janeiro</div>
+    <h1>
+      <em>Valter</em>
+      Popcorn
+    </h1>
+    <div class="hero-divider"></div>
+    <p>Feito à mão, com amor e memória. Uma tradição de família que atravessa gerações.</p>
+    <div class="hero-cta">
+      <a href="#sabores" class="btn-primary">Ver Sabores</a>
+      <a href="#historia" class="btn-outline">Nossa História</a>
+    </div>
+  </div>
+</div>
+
+<!-- FAIXA DE SABORES -->
+<div class="flavors-bar">
+  <div class="flavors-bar-inner">
+    <a class="fbar-item" href="#sabores">
+      <div class="fbar-thumb"><img src="pipoca-amanteigada.jpg" alt="Amanteigada"></div>
+      <div><div class="fbar-label">Amanteigada</div><span class="fbar-type">Salgada</span></div>
+    </a>
+    <a class="fbar-item" href="#sabores">
+      <div class="fbar-thumb"><img src="pipoca-bacon.jpg" alt="Bacon"></div>
+      <div><div class="fbar-label">Bacon Defumado</div><span class="fbar-type">Salgada</span></div>
+    </a>
+    <a class="fbar-item" href="#sabores">
+      <div class="fbar-thumb"><img src="pipoca-queijo.jpg" alt="Queijo"></div>
+      <div><div class="fbar-label">Queijo Frito</div><span class="fbar-type">Salgada</span></div>
+    </a>
+    <a class="fbar-item" href="#sabores">
+      <div class="fbar-thumb"><img src="pipoca-camarao.jpg" alt="Camarão"></div>
+      <div><div class="fbar-label">Camarão</div><span class="fbar-type">Salgada</span></div>
+    </a>
+    <a class="fbar-item" href="#sabores" onclick="showFlavors('doces', document.querySelectorAll('.tab-btn')[1])">
+      <div class="fbar-thumb"><img src="pipoca-caramelo.jpg" alt="Caramelo"></div>
+      <div><div class="fbar-label">Caramelo</div><span class="fbar-type">Doce</span></div>
+    </a>
+    <a class="fbar-item" href="#sabores" onclick="showFlavors('doces', document.querySelectorAll('.tab-btn')[1])">
+      <div class="fbar-thumb"><img src="pipoca-cacau.jpg" alt="Cacau"></div>
+      <div><div class="fbar-label">Cacau</div><span class="fbar-type">Doce</span></div>
+    </a>
+    <a class="fbar-item" href="#sabores" onclick="showFlavors('doces', document.querySelectorAll('.tab-btn')[1])">
+      <div class="fbar-thumb"><img src="pipoca-mix.jpg" alt="MIX"></div>
+      <div><div class="fbar-label">MIX Caramelo & Cacau</div><span class="fbar-type">Doce · Exclusivo</span></div>
+    </a>
+  </div>
+</div>
+
+<!-- SABORES -->
+<section id="sabores">
+  <div class="flavors-header">
+    <span class="section-tag">Nosso Cardápio</span>
+    <h2 class="section-title">Pipocas <em>artesanais</em></h2>
+  </div>
+  <div class="flavor-tabs">
+    <button class="tab-btn active" onclick="showFlavors('salgadas',this)">🧂 Salgadas</button>
+    <button class="tab-btn" onclick="showFlavors('doces',this)">🍬 Doces</button>
+  </div>
+
+  <div class="flavor-panel active" id="panel-salgadas">
+    <div class="flavor-grid">
+      <div class="flavor-card">
+        <div class="flavor-img-wrap"><img src="pipoca-amanteigada.jpg" alt="Amanteigada"></div>
+        <div class="flavor-inner">
+          <div class="flavor-name">Amanteigada</div>
+          <div class="flavor-desc">Pipoca quentinha no ponto perfeito da manteiga. O clássico que nunca sai de moda.</div>
+          <span class="flavor-tag">Clássico</span>
+        </div>
+      </div>
+      <div class="flavor-card">
+        <div class="flavor-img-wrap"><img src="pipoca-bacon.jpg" alt="Bacon Defumado"></div>
+        <div class="flavor-inner">
+          <div class="flavor-name">Amanteigada com Bacon Defumado</div>
+          <div class="flavor-desc">Pipoca amanteigada coberta com fatias de bacon defumado crocante. A favorita da galera.</div>
+          <span class="flavor-tag">Favorita</span>
+        </div>
+      </div>
+      <div class="flavor-card">
+        <div class="flavor-img-wrap"><img src="pipoca-queijo.jpg" alt="Queijo Frito"></div>
+        <div class="flavor-inner">
+          <div class="flavor-name">Queijo</div>
+          <div class="flavor-desc">Pipoca com pedaços de queijo frito dourado e crocante. Salgado e irresistível.</div>
+          <span class="flavor-tag">Especial</span>
+        </div>
+      </div>
+      <div class="flavor-card">
+        <div class="flavor-img-wrap"><img src="pipoca-camarao.jpg" alt="Camarão"></div>
+        <div class="flavor-inner">
+          <div class="flavor-name">Camarão</div>
+          <div class="flavor-desc">Pipoca com camarão frito crocante. Um sabor único e exclusivo em Campo Grande.</div>
+          <span class="flavor-tag">Exclusivo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flavor-panel" id="panel-doces">
+    <div class="flavor-grid">
+      <div class="flavor-card">
+        <div class="flavor-img-wrap"><img src="pipoca-caramelo.jpg" alt="Caramelo"></div>
+        <div class="flavor-inner">
+          <div class="flavor-name">Caramelo</div>
+          <div class="flavor-desc">Crocante por fora, macia por dentro. Caramelo dourado que gruda no coração.</div>
+          <span class="flavor-tag">Clássico</span>
+        </div>
+      </div>
+      <div class="flavor-card">
+        <div class="flavor-img-wrap"><img src="pipoca-cacau.jpg" alt="Cacau"></div>
+        <div class="flavor-inner">
+          <div class="flavor-name">Cacau</div>
+          <div class="flavor-desc">Pipoca envolta em chocolate. Doçura equilibrada para os amantes de cacau.</div>
+          <span class="flavor-tag">Especial</span>
+        </div>
+      </div>
+      <div class="flavor-card">
+        <div class="flavor-img-wrap"><img src="pipoca-mix.jpg" alt="MIX"></div>
+        <div class="flavor-inner">
+          <div class="flavor-name">MIX Caramelo & Cacau</div>
+          <div class="flavor-desc">O melhor dos dois mundos. Caramelo dourado encontra o cacau num equilíbrio perfeito.</div>
+          <span class="flavor-tag">Exclusivo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KRAFT STRIP -->
+<div class="kraft-strip">
+  <div class="kraft-inner">
+    <p>"<em>Cada pipoca conta uma história.</em>"</p>
+    <div class="sub">Embalagem em papel kraft artesanal · Feita na hora · Campo Grande, RJ</div>
+  </div>
+</div>
+
+
+<!-- ORIGENS DOS SABORES -->
+<section id="origens">
+  <div class="origens-header">
+    <span class="section-tag">A Origem de Cada Sabor</span>
+    <h2 class="section-title">Histórias que <em>você sente</em> no sabor</h2>
+  </div>
+
+  <div class="story-timeline">
+
+    <!-- A Pipoca na Sacola -->
+    <div class="story-entry left">
+      <div class="story-entry-text">
+        <div class="story-entry-title">🛍️ A Pipoca na Sacola</div>
+        <div class="story-entry-body">
+          Em um dia comum de 1999, enquanto Valter encerrava mais um dia de trabalho, seu auxiliar perguntou se podia levar pipoca para casa — pois aquela seria a sua <strong>janta</strong>.<br><br>
+          Esse pedido comoveu o Valter. Naquele dia, nascia sua marca registrada: <strong>a pipoca na sacola</strong> — uma forma de proporcionar um capricho a mais para cada cliente, independente do valor que estivesse pagando.
+        </div>
+      </div>
+      <div class="story-entry-dot">
+        <div class="story-dot-circle">🍿</div>
+        <div class="story-dot-year">1999</div>
+      </div>
+      <div class="story-entry-empty"></div>
+    </div>
+
+    <!-- Pipoca de Camarão -->
+    <div class="story-entry right">
+      <div class="story-entry-empty"></div>
+      <div class="story-entry-dot">
+        <div class="story-dot-circle">🦐</div>
+        <div class="story-dot-year">2000</div>
+      </div>
+      <div class="story-entry-text">
+        <div class="story-entry-title">🦐 A Pipoca de Camarão</div>
+        <div class="story-entry-body">
+          Enquanto servia à <strong>Marinha do Brasil</strong>, Valter fez uma viagem para outro estado e se encantou ao ver pipoca de camarão sendo vendida nas ruas.<br><br>
+          No ano 2000, já em Campo Grande, viu o camarão em promoção e decidiu <strong>testar</strong>. Foi um grande sucesso desde o primeiro dia — tornando esse sabor <strong>exclusivo da Valter Popcorn</strong> na região.
+        </div>
+        <img src="campo-grande.jpg" class="story-entry-photo" alt="Campo Grande antigo">
+      </div>
+    </div>
+
+    <!-- Pipoca de Queijo -->
+    <div class="story-entry left">
+      <div class="story-entry-text">
+        <div class="story-entry-title">🧀 A Pipoca de Queijo</div>
+        <div class="story-entry-body">
+          A pipoca de queijo já era conhecida no <strong>Méier</strong>, assim como a de torresmo. O que Valter fez foi levar esse sabor para os eventos, parques e ruas onde trabalhava.<br><br>
+          Em <strong>Campo Grande não havia esse sabor</strong>. Valter chegou primeiro — e em 2001, a pipoca de queijo com pedaços fritos virou tradição no ponto.
+        </div>
+        <img src="meier-antigo.jpg" class="story-entry-photo" alt="Méier antigo">
+      </div>
+      <div class="story-entry-dot">
+        <div class="story-dot-circle">🧀</div>
+        <div class="story-dot-year">2001</div>
+      </div>
+      <div class="story-entry-empty"></div>
+    </div>
+
+    <!-- 2021: continuidade -->
+    <div class="story-entry full">
+      <div class="story-entry-text">
+        <div class="story-entry-title">❤️ O Legado Continua</div>
+        <div class="story-entry-body">
+          Em 2021, com a partida do Valter, seu filho <strong>Gustavo</strong> decidiu resgatar todos esses sabores e manter viva a chama do pai. Sua irmã <strong>Yasmim</strong> criou o Instagram da marca — uma forma de conectar os clientes e compartilhar a história do Valter como gratidão a cada amigo e cliente que ele fez ao longo de todos esses anos.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- HISTÓRIA -->
+<section id="historia" style="padding:0;">
+  <div class="story-block">
+    <div class="story-photo"><img src="valter-jovem.jpg" alt="Valter Reis jovem no ponto de pipoca"></div>
+    <div class="story-card-wrap">
+      <div class="story-card">
+        <span class="section-tag">Desde 1992</span>
+        <h2>Uma história de <em>coragem</em> e amor</h2>
+        <p><strong>Valter Reis</strong> serviu à Marinha do Brasil e trabalhou como desenhista projetista — um homem que construía sonhos no papel enquanto sonhava com o próprio futuro.</p>
+        <p>Com a chegada do filho Gabriel, tomou a decisão mais nobre: <strong>deixou a estabilidade da Marinha</strong> para estar presente. Foi cobrador de ônibus, camelô, enfrentou sol forte e dias difíceis — mas nunca deixou faltar amor dentro de casa.</p>
+        <blockquote>"Até que encontrou na pipoca não apenas um sustento, mas um propósito."</blockquote>
+      </div>
+    </div>
+  </div>
+
+  <div class="story-block reverse">
+    <div class="story-photo"><img src="valter-familia.jpg" alt="Valter com a família no ponto de pipoca"></div>
+    <div class="story-card-wrap">
+      <div class="story-card">
+        <span class="section-tag">Uma tradição familiar</span>
+        <h2>Campo Grande, <em>Rio de Janeiro</em></h2>
+        <p>Do Méier ao mundo, Valter conquistou clientes não apenas pelo sabor, mas pelo jeito <strong>humano e acolhedor</strong> com que tratava cada pessoa.</p>
+        <p>Conquistou seu ponto fixo em <strong>Campo Grande</strong>, onde criou três filhos: Gabriel, Gustavo e Yasmim — ensinando humildade, trabalho duro e amor ao próximo.</p>
+        <p>Em 2021, Valter partiu. Hoje, <strong>seus filhos seguem à frente da marca</strong>, carregando não apenas um nome, mas um legado.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="story-milestones">
+    <div class="milestone"><div class="milestone-year">1992</div><div class="milestone-text">Valter começa a vender pipoca pelo Rio de Janeiro</div></div>
+    <div class="milestone"><div class="milestone-year">2000s</div><div class="milestone-text">Conquista o ponto fixo em Campo Grande</div></div>
+    <div class="milestone"><div class="milestone-year">2021</div><div class="milestone-text">Valter Reis parte, mas seu legado permanece</div></div>
+    <div class="milestone"><div class="milestone-year">Hoje</div><div class="milestone-text">Seus filhos continuam o sonho do pai</div></div>
+  </div>
+</section>
+
+<!-- PATRIMÔNIO -->
+<section id="patrimonio">
+  <div class="heritage-inner">
+    <span class="section-tag">Reconhecimento</span>
+    <h2 class="section-title">Pipoqueiro: <em>Patrimônio</em> Cultural do Rio</h2>
+    <p>A Lei 8.243/2024 reconheceu os pipoqueiros como Patrimônio Cultural Imaterial da cidade do Rio de Janeiro — um título que celebra décadas de tradição, presença e afeto nas ruas cariocas.</p>
+    <p>A Valter Popcorn faz parte dessa história. Somos mais que um negócio: somos memória afetiva de Campo Grande.</p>
+    <a class="heritage-badge" href="#contato">🍿 &nbsp; Venha nos conhecer</a>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato">
+  <span class="section-tag">Encontre a gente</span>
+  <h2 class="section-title">Venha provar <em>de perto</em></h2>
+  <p class="contact-info">
+    Ponto fixo em <strong>Campo Grande, Rio de Janeiro</strong><br>
+    Embalagem artesanal em papel kraft · Feito na hora
+  </p>
+  <div class="contact-links">
+    <a class="social-btn" href="https://www.instagram.com/valterpopcorn" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+      @valterpopcorn
+    </a>
+    <a class="social-btn" href="https://wa.me/5521979074519?text=Olá!%20Vi%20o%20site%20da%20Valter%20Popcorn%20e%20quero%20mais%20informações." target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+      WhatsApp
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Valter Popcorn Shop</div>
+  <div class="footer-line"></div>
+  <p>Campo Grande · Rio de Janeiro · Desde 1992</p>
+  <p style="margin-top:0.5rem">© 2025 Valter Popcorn · Um legado de família</p>
+</footer>
+
+<script>
+  // Nav fica sólido ao rolar
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  function showFlavors(type, btn) {
+    document.querySelectorAll('.flavor-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + type).classList.add('active');
+    if (btn) btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
